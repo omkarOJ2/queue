@@ -4,48 +4,56 @@
 #include<string.h>
 #include<stdbool.h>
 int n;
-int add(int q[],int *f,int *r)
-{
-    if(*r==n-1){
-        printf("\nqueue is Full\n");
-        return 0;
-    }
-    int elem;
-    printf("\nEnter the elemenet to be added:");
-    scanf("%d",&elem);
-    q[++(*r)]=elem;
+int add(int q[],int *f,int *r,int *elem)
+{   
+    if(*f==-1 && *r==-1)
+        *f=*r=0;
+    else
+        *r=(*r+1)%n;
+    q[*r]=*elem;
+    printf("\n %d is added to queue \n",*elem); 
 }
 int pop(int q[],int *f,int *r)
-{
-     if(*r==*f){
-        printf("\nqueue is Empty\n");
+{    
+     if(*f==-1 && *r==-1)
+     {
+        printf("\n Queue is Empty ");
         return 0;
      }
-     printf("\n the deleted  elemenet is : %d",q[++(*f)]);
-     for(int i=0;i<=*r-*f;i++)
+     else if(*f==*r)
      {
-        q[i]=q[i+1];
+        printf("\n the elment deleted is : %d \n",q[*f]);
+        *f=*r=-1;
      }
-     *f=-1;
-     (*r)--;
+     else
+     {
+        printf("\n the elment deleted is : %d \n",q[*f]);
+        *f=(*f+1)%n;
+     }
      
 }
 bool isFull(int *f,int *r)
 {
-     return *r==n-1;
+     return (*r+1)%n==*f;
 }
 bool isEmpty(int *f,int *r)
 {
-   return *r==*f;;
+   return *f==-1;
 }
 int display(int q[],int *f,int *r)
 {   
-    if(*r==*f){
+    if(*f==-1)
+     {
         printf("\nqueue is Empty\n");
         return 0;
      }
-    for(int i=*f+1;i<=*r;i++)
-        printf("\n%d",q[i]);
+    int i=*f;
+    while(i!=*r)
+    {
+        printf("\n %d",q[i]);
+        i=(i+1)%n;
+    }
+    printf("\n %d",q[*r]);
 }
 
 int main()
@@ -62,7 +70,16 @@ int main()
 
         switch (ch) {
             case 1:
-                add(queue, &f,&r);
+                if (f==(r+1)%n)
+                    printf("\n Queue is full \n");
+                else
+                {
+                    int elem;
+                    printf("\n Enter the element to be added :");
+                    scanf("%d",&elem);
+                    add(queue, &f,&r,&elem);
+                }    
+                    
                 break;
             case 2:
                 pop(queue, &f, &r);
