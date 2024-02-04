@@ -22,6 +22,13 @@ int pop(int q[],int *f,int *r)
         return 0;
      }
      printf("\n the deleted  elemenet is : %d",q[++(*f)]);
+     for(int i=0;i<=*r-*f;i++)
+     {
+        q[i]=q[i+1];
+     }
+     *f=-1;
+     (*r)--;
+     
 }
 bool isFull(int *f,int *r)
 {
