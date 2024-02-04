@@ -4,10 +4,21 @@
 #include<string.h>
 #include<stdbool.h>
 int n;
-int add(int q[],int *f,int *r)
+int insertf(int q[],int *f,int *r)
+{
+    if(*f==-1 ){
+        printf("\ninsertion from front is not posible\n");
+        return 0;
+    }
+    int elem;
+    printf("\nEnter the elemenet to be added:");
+    scanf("%d",&elem);
+    q[(*f)--]=elem;
+}
+int insertr(int q[],int *f,int *r)
 {
     if(*r==n-1){
-        printf("\nqueue is Full\n");
+        printf("\ninsertion from rear is not posible\n");
         return 0;
     }
     int elem;
@@ -15,28 +26,30 @@ int add(int q[],int *f,int *r)
     scanf("%d",&elem);
     q[++(*r)]=elem;
 }
-int pop(int q[],int *f,int *r)
+int popf(int q[],int *f,int *r)
 {
      if(*r==*f){
         printf("\nqueue is Empty\n");
         return 0;
      }
      printf("\n the deleted  elemenet is : %d",q[++(*f)]);
-     for(int i=0;i<=*r-*f;i++)
-     {
-        q[i]=q[i+1];
+}
+
+int popr(int q[],int *f,int *r)
+{
+     if(*r==*f){
+        printf("\nqueue is Empty\n");
+        return 0;
      }
-     *f=-1;
-     (*r)--;
-     
+     printf("\n the deleted  elemenet is : %d",q[--(*r)]);  
 }
 bool isFull(int *f,int *r)
 {
-     return *r==n-1;
+     return (*r==n-1 && *f==-1);
 }
 bool isEmpty(int *f,int *r)
 {
-   return *r==*f;;
+   return (*r==*f);
 }
 int display(int q[],int *f,int *r)
 {   
@@ -56,27 +69,33 @@ int main()
     int queue[n],f=-1,r=-1;
     while (1) 
     {
-        printf("\n The choices are :\n 1. Add\n 2. Pop\n 3. Display \n 4. Is Full\n 5. Is Empty  \n 6. Exit");
+        printf("\n The choices are :\n 1. Insert from front \n 2. Insert from rear\n 3. pop from front \n 4. pop from rear\n 5. Display  \n 6. Is Full\n 7. Is Empty  \n 8. Exit");
         printf("\nEnter your choice :");
         scanf("%d", &ch);
 
         switch (ch) {
             case 1:
-                add(queue, &f,&r);
+                insertf(queue, &f,&r);
                 break;
             case 2:
-                pop(queue, &f, &r);
+                insertr(queue, &f,&r);
                 break;
             case 3:
-                display(queue, &f ,&r);
+                popf(queue, &f ,&r);
                 break;
-            case 4:
-                    printf("\n Is Full: %s\n", isFull(&f,&r) ? "true" : "false");
+             case 4:
+                popr(queue, &f ,&r);
                 break;
             case 5:
-                printf("\n Is Empty: %s\n", isEmpty(&f,&r) ? "true" : "false");
+                display(queue,&f,&r);
                 break;
             case 6:
+                    printf("\n Is Full: %s\n", isFull(&f,&r) ? "true" : "false");
+                break;
+            case 7:
+                printf("\n Is Empty: %s\n", isEmpty(&f,&r) ? "true" : "false");
+                break;
+            case 8:
                 exit(0);
                 break;
             default:
